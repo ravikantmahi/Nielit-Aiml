@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI & ML Programme | NIELIT × IIT Ropar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ─── Reset ─── */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      background: #94a3b8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 20px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ─── Print Button ─── */
+    .print-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: #0f172a;
+      color: #fff;
+      border: none;
+      padding: 14px 26px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ─── A4 Page ─── */
+    .page {
+      width: 210mm;
+      height: 297mm;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #f8f7f4;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    /* ══════════════════════════════════════
+     LEFT PANEL — Dark Navy sidebar
+  ══════════════════════════════════════ */
+    .layout {
+      display: flex;
+      flex: 1;
+      height: 100%;
+    }
+
+    .sidebar {
+      width: 68mm;
+      background: #0c1526;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* Diagonal accent inside sidebar */
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 70% 80%, rgba(212, 175, 55, 0.12) 0%, transparent 50%);
+      z-index: 0;
+    }
+
+    /* Gold vertical accent line on sidebar right edge */
+    .sidebar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, #d4af37 0%, #f5cc5a 35%, #b8952e 70%, #d4af37 100%);
+      z-index: 10;
+    }
+
+    /* Decorative geometry inside sidebar */
+    .sb-geo {
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .sb-ring-1 {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.12);
+      top: -40px;
+      right: -40px;
+    }
+
+    .sb-ring-2 {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.08);
+      top: 10px;
+      right: 10px;
+    }
+
+    .sb-ring-3 {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 1px solid rgba(99, 102, 241, 0.1);
+      bottom: 60px;
+      left: -80px;
+    }
+
+    .sb-dot-grid {
+      position: absolute;
+      bottom: 120px;
+      left: 16px;
+      display: grid;
+      grid-template-columns: repeat(5, 8px);
+      grid-template-rows: repeat(7, 8px);
+      gap: 6px;
+      z-index: 1;
+    }
+
+    .sb-dot-grid span {
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      display: block;
+    }
+
+    /* ─── Sidebar Content ─── */
+    .sb-inner {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 44px 28px 36px 28px;
+    }
+
+    /* Logos stacked vertically */
+    .logo-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    /* Default logo card — white background for IIT logo */
+    .logo-card {
+      background: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .logo-card img {
+      height: 76px;
+      width: auto;
+      object-fit: contain;
+      filter: none;
+      opacity: 1;
+    }
+
+    /* NIELIT logo card — white background to show real brand colours */
+    .logo-card-nielit {
+      background: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .logo-card-nielit img {
+      height: 78px;
+      width: auto;
+      object-fit: contain;
+      filter: none;
+      opacity: 1;
+    }
+
+    .logo-separator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-sep-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .logo-sep-x {
+      font-size: 9px;
+      color: rgba(212, 175, 55, 0.7);
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    /* ─── Sidebar Tag ─── */
+    .sb-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 12px 5px 8px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 4px;
+      margin-bottom: 32px;
+    }
+
+    .sb-tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #d4af37;
+    }
+
+    .sb-tag-text {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+
+    /* ─── Key Stats in Sidebar ─── */
+    .sb-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      flex: 1;
+    }
+
+    .sb-stat {
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sb-stat:last-child {
+      border-bottom: none;
+    }
+
+    .sb-stat-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .sb-stat-val span {
+      font-size: 16px;
+      font-weight: 400;
+      color: #d4af37;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0px;
+      margin-left: 2px;
+    }
+
+    .sb-stat-lbl {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, 0.7);
+      margin-top: 6px;
+    }
+
+    /* ─── Sidebar Bottom Contact ─── */
+    .sb-contact {
+      margin-top: auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sb-contact-label {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, 0.5);
+      margin-bottom: 6px;
+    }
+
+    .sb-contact-url {
+      font-size: 10px;
+      color: #d4af37;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      word-break: break-all;
+    }
+
+    /* ══════════════════════════════════════
+     RIGHT PANEL — Main content
+  ══════════════════════════════════════ */
+    .main-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      background: #f8f7f4;
+    }
+
+    /* Subtle background texture */
+    .main-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        radial-gradient(circle at 90% 5%, rgba(212, 175, 55, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 10% 95%, rgba(99, 102, 241, 0.05) 0%, transparent 40%);
+      z-index: 0;
+    }
+
+    /* ─── Top accent bar ─── */
+    .top-bar {
+      height: 5px;
+      background: linear-gradient(90deg, #d4af37 0%, #f5cc5a 30%, #1e3a8a 65%, #0c1526 100%);
+      position: relative;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    /* ─── Main content inner ─── */
+    .mc-inner {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 44px 44px 0 44px;
+    }
+
+    /* ─── Programme Badge ─── */
+    .prog-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+
+    .badge-line {
+      width: 28px;
+      height: 1px;
+      background: #d4af37;
+    }
+
+    .badge-text {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+
+    /* ─── Main Headline ─── */
+    .headline {
+      margin-bottom: 6px;
+    }
+
+    .hl-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #1e3a8a;
+      margin-bottom: 10px;
+    }
+
+    .hl-title-1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 66px;
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -2px;
+      color: #0c1526;
+      display: block;
+    }
+
+    .hl-title-2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 62px;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1;
+      letter-spacing: -1.5px;
+      color: #1e3a8a;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .hl-title-3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 44px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -1px;
+      color: #d4af37;
+      display: block;
+      margin-top: 8px;
+    }
+
+    /* ─── Divider rule ─── */
+    .rule {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .rule-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, #0c1526, rgba(0, 0, 0, 0.06));
+    }
+
+    .rule-diamond {
+      width: 6px;
+      height: 6px;
+      background: #d4af37;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* ─── Description ─── */
+    .desc {
+      font-size: 13px;
+      line-height: 1.85;
+      color: #475569;
+      font-weight: 400;
+      max-width: 380px;
+      margin-bottom: 32px;
+      padding-left: 16px;
+      border-left: 2px solid rgba(212, 175, 55, 0.4);
+      text-align: justify;
+    }
+
+    /* ─── Curriculum Grid ─── */
+    .section-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .curr-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 0;
+    }
+
+    .curr-card {
+      background: #ffffff;
+      border: 1px solid #e8e8e4;
+      border-radius: 6px;
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .curr-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #1e3a8a, #d4af37);
+    }
+
+    .curr-card-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #0c1526;
+      line-height: 1;
+      margin-bottom: 8px;
+      opacity: 0.18;
+    }
+
+    .curr-card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 0.3px;
+      margin-bottom: 4px;
+    }
+
+    .curr-card-desc {
+      font-size: 10px;
+      color: #64748b;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    /* ─── Leadership Section ─── */
+    .leadership-section {
+      margin-top: 14px;
+      padding-top: 12px;
+    }
+
+    .leadership-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .leader-linkedin {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 5px;
+      font-size: 8px;
+      font-weight: 600;
+      color: #0a66c2;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+
+    .leader-linkedin svg {
+      flex-shrink: 0;
+    }
+
+    .leader-linkedin:hover {
+      text-decoration: underline;
+    }
+
+    .leader-social-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 5px;
+    }
+
+    .leader-social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+
+    .leader-social-link:hover {
+      text-decoration: underline;
+    }
+
+    .link-linkedin {
+      color: #0a66c2;
+    }
+
+    .link-github {
+      color: #24292e;
+    }
+
+    .link-scholar {
+      color: #1a73e8;
+    }
+
+    .leader-card {
+      background: #ffffff;
+      border: 1px solid #e8e8e4;
+      border-radius: 6px;
+      padding: 14px 10px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .leader-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #d4af37, #1e3a8a);
+    }
+
+    .leader-photo {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(212, 175, 55, 0.5);
+      flex-shrink: 0;
+      background: #e8e8e4;
+      margin-bottom: 10px;
+    }
+
+    .leader-photo-placeholder {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid rgba(212, 175, 55, 0.5);
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #0c1526 0%, #1e3a8a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #d4af37;
+      margin-bottom: 10px;
+    }
+
+    .leader-info {
+      width: 100%;
+    }
+
+    .leader-role {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 3px;
+    }
+
+    .leader-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 0.2px;
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+
+    .leader-dept {
+      font-size: 9px;
+      color: #64748b;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    /* ─── Footer Band ─── */
+    .footer-band {
+      margin-top: auto;
+      position: relative;
+      z-index: 5;
+      background: #0c1526;
+      padding: 18px 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .ft-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .ft-lbl {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, 0.5);
+    }
+
+    .ft-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    .ft-center {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ft-sep {
+      width: 1px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .ft-pill {
+      padding: 5px 14px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 3px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4af37;
+    }
+
+    .ft-right {
+      text-align: right;
+    }
+
+    .ft-year-lbl {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, 0.5);
+    }
+
+    .ft-year {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #d4af37;
+      line-height: 1;
+      letter-spacing: -0.5px;
+    }
+
+    /* ─── SVG Decorative layer in main panel ─── */
+    .deco-layer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* ══════════════════════════════════════
+     PRINT STYLES
+  ══════════════════════════════════════ */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        margin: 0;
+        background: #ffffff;
+      }
+
+      .page {
+        box-shadow: none;
+        margin: 0;
+        width: 210mm;
+        height: 297mm;
+      }
+
+      .print-btn {
+        display: none !important;
+      }
+
+      .sidebar {
+        background: #0c1526 !important;
+      }
+
+      .footer-band {
+        background: #0c1526 !important;
+      }
+
+      .top-bar {
+        background: linear-gradient(90deg, #d4af37 0%, #f5cc5a 30%, #1e3a8a 65%, #0c1526 100%) !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <button class="print-btn" onclick="window.print()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 6 2 18 2 18 9" />
+      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+      <rect x="6" y="14" width="12" height="8" />
+    </svg>
+    Print A4
+  </button>
+
+  <div class="page">
+    <div class="layout">
+
+      <!-- ══ SIDEBAR ══ -->
+      <div class="sidebar">
+        <!-- Geometric decorations -->
+        <div class="sb-geo sb-ring-1"></div>
+        <div class="sb-geo sb-ring-2"></div>
+        <div class="sb-geo sb-ring-3"></div>
+
+        <!-- Dot grid decoration -->
+        <div class="sb-dot-grid">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <!-- Neural Network SVG -->
+        <svg style="position:absolute;bottom:155px;right:0;width:68mm;height:140px;z-index:1;opacity:0.25;"
+          viewBox="0 0 257 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Input layer -->
+          <circle cx="30" cy="25" r="4" stroke="#d4af37" stroke-width="1" />
+          <circle cx="30" cy="60" r="4" stroke="#d4af37" stroke-width="1" />
+          <circle cx="30" cy="95" r="4" stroke="#d4af37" stroke-width="1" />
+          <circle cx="30" cy="120" r="4" stroke="#d4af37" stroke-width="1" />
+          <!-- Hidden layer 1 -->
+          <circle cx="90" cy="20" r="4" stroke="#6366f1" stroke-width="1" />
+          <circle cx="90" cy="50" r="4" stroke="#6366f1" stroke-width="1" />
+          <circle cx="90" cy="80" r="4" stroke="#6366f1" stroke-width="1" />
+          <circle cx="90" cy="110" r="4" stroke="#6366f1" stroke-width="1" />
+          <circle cx="90" cy="130" r="3" stroke="#6366f1" stroke-width="1" />
+          <!-- Hidden layer 2 -->
+          <circle cx="165" cy="30" r="4" stroke="#3b82f6" stroke-width="1" />
+          <circle cx="165" cy="65" r="4" stroke="#3b82f6" stroke-width="1" />
+          <circle cx="165" cy="100" r="4" stroke="#3b82f6" stroke-width="1" />
+          <circle cx="165" cy="125" r="3" stroke="#3b82f6" stroke-width="1" />
+          <!-- Output layer -->
+          <circle cx="230" cy="45" r="5" stroke="#d4af37" stroke-width="1.5" />
+          <circle cx="230" cy="90" r="5" stroke="#d4af37" stroke-width="1.5" />
+
+          <!-- Connections input → h1 -->
+          <line x1="34" y1="25" x2="86" y2="20" stroke="#ffffff" stroke-width="0.5" opacity="0.4" />
+          <line x1="34" y1="25" x2="86" y2="50" stroke="#ffffff" stroke-width="0.5" opacity="0.3" />
+          <line x1="34" y1="60" x2="86" y2="20" stroke="#ffffff" stroke-width="0.5" opacity="0.3" />
+          <line x1="34" y1="60" x2="86" y2="50" stroke="#ffffff" stroke-width="0.5" opacity="0.4" />
+          <line x1="34" y1="60" x2="86" y2="80" stroke="#ffffff" stroke-width="0.5" opacity="0.3" />
+          <line x1="34" y1="95" x2="86" y2="80" stroke="#ffffff" stroke-width="0.5" opacity="0.4" />
+          <line x1="34" y1="95" x2="86" y2="110" stroke="#ffffff" stroke-width="0.5" opacity="0.3" />
+          <line x1="34" y1="120" x2="86" y2="110" stroke="#ffffff" stroke-width="0.5" opacity="0.3" />
+          <line x1="34" y1="120" x2="86" y2="130" stroke="#ffffff" stroke-width="0.5" opacity="0.3" />
+
+          <!-- Connections h1 → h2 -->
+          <line x1="94" y1="20" x2="161" y2="30" stroke="#ffffff" stroke-width="0.5" opacity="0.3" />
+          <line x1="94" y1="50" x2="161" y2="30" stroke="#ffffff" stroke-width="0.5" opacity="0.3" />
+          <line x1="94" y1="50" x2="161" y2="65" stroke="#ffffff" stroke-width="0.5" opacity="0.4" />
+          <line x1="94" y1="80" x2="161" y2="65" stroke="#ffffff" stroke-width="0.5" opacity="0.3" />
+          <line x1="94" y1="80" x2="161" y2="100" stroke="#ffffff" stroke-width="0.5" opacity="0.4" />
+          <line x1="94" y1="110" x2="161" y2="100" stroke="#ffffff" stroke-width="0.5" opacity="0.3" />
+          <line x1="94" y1="110" x2="161" y2="125" stroke="#ffffff" stroke-width="0.5" opacity="0.3" />
+
+          <!-- Connections h2 → output -->
+          <line x1="169" y1="30" x2="225" y2="45" stroke="#d4af37" stroke-width="0.8" opacity="0.5" />
+          <line x1="169" y1="65" x2="225" y2="45" stroke="#d4af37" stroke-width="0.8" opacity="0.4" />
+          <line x1="169" y1="65" x2="225" y2="90" stroke="#d4af37" stroke-width="0.8" opacity="0.5" />
+          <line x1="169" y1="100" x2="225" y2="90" stroke="#d4af37" stroke-width="0.8" opacity="0.4" />
+          <line x1="169" y1="125" x2="225" y2="90" stroke="#d4af37" stroke-width="0.8" opacity="0.3" />
+        </svg>
+
+        <div class="sb-inner">
+          <!-- Institute Logos -->
+          <div class="logo-stack">
+            <div class="logo-card-nielit">
+              <img src="https://www.nielit.gov.in/images/NIELIT_logo.jpg" alt="NIELIT">
+            </div>
+            <div class="logo-separator">
+              <div class="logo-sep-line"></div>
+              <div class="logo-sep-x">×</div>
+              <div class="logo-sep-line"></div>
+            </div>
+            <div class="logo-card">
+              <img src="https://upload.wikimedia.org/wikipedia/en/3/31/Indian_Institute_of_Technology_Ropar_logo.svg"
+                alt="IIT Ropar">
+            </div>
+          </div>
+
+          <!-- Tag -->
+          <div class="sb-tag">
+            <div class="sb-tag-dot"></div>
+            <span class="sb-tag-text">Industrial Training</span>
+          </div>
+
+          <!-- Stats -->
+          <div class="sb-stats">
+            <div class="sb-stat">
+              <div class="sb-stat-val">6<span>Months</span></div>
+              <div class="sb-stat-lbl">Programme Duration</div>
+            </div>
+            <div class="sb-stat">
+              <div class="sb-stat-val">4<span>Modules</span></div>
+              <div class="sb-stat-lbl">Core Curriculum</div>
+            </div>
+            <div class="sb-stat">
+              <div class="sb-stat-val">2<span>Bodies</span></div>
+              <div class="sb-stat-lbl">Joint Certification</div>
+            </div>
+            <div class="sb-stat">
+              <div class="sb-stat-val">100<span>%</span></div>
+              <div class="sb-stat-lbl">Practical Focus</div>
+            </div>
+          </div>
+
+          <!-- Contact -->
+          <div class="sb-contact">
+            <div class="sb-contact-label">Admissions Portal</div>
+            <div class="sb-contact-url">nltchd.info/trgcandregn/<br>studAdmission</div>
+          </div>
+        </div>
+      </div>
+      <!-- ══ END SIDEBAR ══ -->
+
+      <!-- ══ MAIN PANEL ══ -->
+      <div class="main-panel">
+        <div class="top-bar"></div>
+
+        <!-- Decorative SVG background elements -->
+        <div class="deco-layer">
+          <svg width="100%" height="100%" viewBox="0 0 480 830" fill="none" xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMaxYMin meet">
+            <!-- Large ghost text -->
+            <text x="480" y="440" text-anchor="end" font-family="Inter, sans-serif" font-size="280" font-weight="800"
+              fill="none" stroke="rgba(0,0,0,0.03)" stroke-width="1" letter-spacing="-12">AI</text>
+            <!-- Geometric lines top-right -->
+            <line x1="350" y1="0" x2="480" y2="80" stroke="rgba(212,175,55,0.08)" stroke-width="1" />
+            <line x1="380" y1="0" x2="480" y2="60" stroke="rgba(30,58,138,0.05)" stroke-width="1" />
+            <line x1="420" y1="0" x2="480" y2="40" stroke="rgba(30,58,138,0.05)" stroke-width="1" />
+            <!-- Corner accent -->
+            <rect x="450" y="0" width="30" height="30" fill="none" stroke="rgba(212,175,55,0.12)" stroke-width="1" />
+            <!-- Subtle arcs -->
+            <path d="M 480 200 Q 350 350 380 500" stroke="rgba(99,102,241,0.06)" stroke-width="1.5" fill="none" />
+            <path d="M 480 180 Q 330 360 360 520" stroke="rgba(99,102,241,0.04)" stroke-width="1" fill="none" />
+            <!-- Bottom decorative lines -->
+            <line x1="0" y1="750" x2="150" y2="830" stroke="rgba(212,175,55,0.06)" stroke-width="1" />
+            <line x1="0" y1="780" x2="120" y2="830" stroke="rgba(212,175,55,0.04)" stroke-width="1" />
+          </svg>
+        </div>
+
+        <div class="mc-inner">
+          <!-- Badge -->
+          <div class="prog-badge">
+            <div class="badge-line"></div>
+            <span class="badge-text">NIELIT Chandigarh · 2026</span>
+          </div>
+
+          <!-- Headline -->
+          <div class="headline">
+            <div class="hl-eyebrow">Joint Certification Programme</div>
+            <span class="hl-title-1">Artificial</span>
+            <span class="hl-title-2">Intelligence</span>
+            <span class="hl-title-3">&amp; Machine Learning</span>
+          </div>
+
+          <!-- Divider -->
+          <div class="rule">
+            <div class="rule-line"></div>
+            <div class="rule-diamond"></div>
+          </div>
+
+          <!-- Description -->
+          <p class="desc">
+            A premium industrial training programme for engineers, data scientists, and technology professionals —
+            covering the complete spectrum of AI &amp; ML from theoretical foundations to production-grade deployment,
+            jointly certified by NIELIT and IIT Ropar.
+          </p>
+
+          <!-- Curriculum -->
+          <div class="section-label">Programme Architecture</div>
+          <div class="curr-grid">
+            <div class="curr-card">
+              <div class="curr-card-num">01</div>
+              <div class="curr-card-title">Python &amp; Data Science</div>
+              <div class="curr-card-desc">Foundations, NumPy, Pandas, Data Visualization &amp; EDA</div>
+            </div>
+            <div class="curr-card">
+              <div class="curr-card-num">02</div>
+              <div class="curr-card-title">Machine Learning</div>
+              <div class="curr-card-desc">Supervised, Unsupervised, Ensemble &amp; Model Evaluation</div>
+            </div>
+            <div class="curr-card">
+              <div class="curr-card-num">03</div>
+              <div class="curr-card-title">Deep Learning</div>
+              <div class="curr-card-desc">Neural Nets, CNNs, RNNs, Attention &amp; Transformers</div>
+            </div>
+            <div class="curr-card">
+              <div class="curr-card-num">04</div>
+              <div class="curr-card-title">AI Deployment</div>
+              <div class="curr-card-desc">MLOps, REST APIs, Cloud Platforms &amp; Production Systems</div>
+            </div>
+          </div>
+
+          <!-- Leadership Section -->
+          <div class="leadership-section">
+            <div class="section-label">Programme Leadership</div>
+            <div class="leadership-grid">
+
+              <!-- Executive Director -->
+              <div class="leader-card">
+                <img id="exec-director-photo" class="leader-photo" src="https://nielit.ac.in/img/ed/ed.png"
+                  alt="Executive Director"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="leader-photo-placeholder" style="display:none;">ED</div>
+                <div class="leader-info">
+                  <div class="leader-role">Executive Director</div>
+                  <div class="leader-name">Deepak Wasan</div>
+                  <div class="leader-dept">NIELIT Chandigarh</div>
+                </div>
+              </div>
+
+              <!-- HOD -->
+              <div class="leader-card">
+                <img id="hod-photo" class="leader-photo"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkYWN2b40bT5kkc62nHWN-fLLtIFizIWwANA&s"
+                  alt="Head of Department"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="leader-photo-placeholder" style="display:none;">HOD</div>
+                <div class="leader-info">
+                  <div class="leader-role">Head of Department</div>
+                  <div class="leader-name">Anita Budhiraja</div>
+                  <div class="leader-dept">AI &amp; ML Department</div>
+                </div>
+              </div>
+
+              <!-- Joint Director -->
+              <div class="leader-card">
+                <img id="joint-director-photo" class="leader-photo"
+                  src="https://raw.githubusercontent.com/nielitropar/computer-vision/refs/heads/main/assets/Sarwan_Singh.JPG"
+                  alt="Joint Director"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="leader-photo-placeholder" style="display:none;">JD</div>
+                <div class="leader-info">
+                  <div class="leader-role">Joint Director</div>
+                  <div class="leader-name">Dr. Sarwan Singh</div>
+                  <div class="leader-dept">NIELIT Chandigarh</div>
+                  <div class="leader-social-links">
+                    <a class="leader-social-link link-linkedin" href="https://in.linkedin.com/in/imsarwansingh"
+                      target="_blank">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="#0a66c2">
+                        <path
+                          d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.21 24 24 23.23 24 22.27V1.73C24 .77 23.21 0 22.22 0z" />
+                      </svg>
+                      LinkedIn
+                    </a>
+                    <a class="leader-social-link link-github" href="https://github.com/sarwansingh" target="_blank">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="#24292e">
+                        <path
+                          d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z" />
+                      </svg>
+                      GitHub
+                    </a>
+                    <a class="leader-social-link link-scholar"
+                      href="https://scholar.google.com/citations?user=_xsJf2YAAAAJ&hl=en" target="_blank">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="#1a73e8">
+                        <path
+                          d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.84 3.14A7.999 7.999 0 0 1 12 10a8 8 0 0 1 7.16 2.64L24 9.5 12 0z" />
+                      </svg>
+                      Scholar
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Footer Band -->
+        <div class="footer-band">
+          <div class="ft-left">
+            <span class="ft-lbl">Conducting Institute</span>
+            <span class="ft-name">NIELIT Chandigarh</span>
+          </div>
+
+          <div class="ft-center">
+            <div class="ft-sep"></div>
+            <div class="ft-pill">Admissions Open</div>
+            <div class="ft-sep"></div>
+          </div>
+
+          <div class="ft-right">
+            <div class="ft-year-lbl">Batch</div>
+            <div class="ft-year">2026</div>
+          </div>
+        </div>
+      </div>
+      <!-- ══ END MAIN PANEL ══ -->
+
+    </div>
+  </div>
+
+</body>
+
+</html>
