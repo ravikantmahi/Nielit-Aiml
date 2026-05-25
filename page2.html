@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & ML Brochure | Page 3 - Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ─── Base Reset & Exact Print Rendering ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            background: #94a3b8;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px 20px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ─── Flawless A4 Page Setup ─── */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background-color: #f8f7f4;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+            color: #0f172a;
+        }
+
+        /* ─── Subtle background texture ─── */
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.03;
+            mix-blend-mode: multiply;
+            z-index: 1;
+            transform: scaleY(-1);
+        }
+
+        .bg-gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 90% 5%, rgba(212, 175, 55, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 10% 95%, rgba(99, 102, 241, 0.05) 0%, transparent 40%);
+            z-index: 2;
+        }
+
+        /* ─── Floating Print Button ─── */
+        .print-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: #0f172a;
+            color: #fff;
+            border: none;
+            padding: 14px 26px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .print-btn:hover {
+            background: #1e3a8a;
+        }
+
+        /* ─── Top Accent ─── */
+        .color-streak {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #d4af37 0%, #f5cc5a 30%, #1e3a8a 65%, #0c1526 100%);
+            z-index: 10;
+        }
+
+        .side-rule {
+            position: absolute;
+            left: 56px;
+            top: 80px;
+            bottom: 80px;
+            width: 2px;
+            background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.5) 20%, rgba(30, 58, 138, 0.6) 50%, rgba(212, 175, 55, 0.4) 80%, transparent);
+            z-index: 5;
+        }
+
+        /* ─── Main headline ─── */
+        .headline-block {
+            position: relative;
+            z-index: 5;
+            padding: 70px 64px 0 80px;
+        }
+
+        .headline-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #1e3a8a;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            padding-left: 4px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .headline-sub::before {
+            content: '';
+            width: 28px;
+            height: 1px;
+            background: #d4af37;
+        }
+
+        .headline-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 300;
+            line-height: 0.95;
+            letter-spacing: -1.5px;
+            margin-bottom: 4px;
+            color: #0c1526;
+        }
+
+        .headline-main em {
+            font-style: italic;
+            color: #1e3a8a;
+            display: block;
+            font-weight: 400;
+        }
+
+        .headline-main strong {
+            font-weight: 900;
+            font-style: normal;
+            color: #d4af37;
+            display: block;
+        }
+
+        /* ─── Clean White Panels ─── */
+        .glass-panel {
+            background: #ffffff;
+            border: 1px solid #e8e8e4;
+            border-radius: 6px;
+            padding: 20px 28px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            position: relative;
+            z-index: 5;
+            margin: 0 64px 16px 80px;
+            overflow: hidden;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1e3a8a, #d4af37);
+        }
+
+        .panel-title {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: #d4af37;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-title::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #d4af37;
+            transform: rotate(45deg);
+            flex-shrink: 0;
+        }
+
+        /* ─── Objective Section ─── */
+        .objective-text {
+            font-size: 12.5px;
+            line-height: 1.85;
+            color: #475569;
+            font-weight: 400;
+            border-left: 2px solid rgba(212, 175, 55, 0.4);
+            padding-left: 14px;
+            text-align: justify;
+        }
+
+        .objective-text strong {
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        /* ─── Highlights & Outcomes Grid ─── */
+        .split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .bullet-list li {
+            position: relative;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #475569;
+            padding-left: 20px;
+            font-weight: 400;
+        }
+
+        .bullet-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            top: -2px;
+            color: #1e3a8a;
+            font-weight: 700;
+        }
+
+        .outcome-list li::before {
+            color: #d4af37;
+        }
+
+        /* ─── Eligibility & Fees ─── */
+        .info-band {
+            display: flex;
+            gap: 16px;
+            margin: 0 64px 16px 80px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .info-card {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #e8e8e4;
+            border-radius: 6px;
+            padding: 18px 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+        }
+
+        .info-card:nth-child(1)::before {
+            background: linear-gradient(90deg, #1e3a8a, #d4af37);
+        }
+
+        .info-card:nth-child(2)::before {
+            background: linear-gradient(90deg, #d4af37, #1e3a8a);
+        }
+
+        .info-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #0c1526;
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+
+        .info-subtext {
+            font-size: 11px;
+            color: #64748b;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* ─── Methodology Pills ─── */
+        .methodology-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 10px;
+        }
+
+        .method-pill {
+            background: rgba(30, 58, 138, 0.06);
+            border: 1px solid rgba(30, 58, 138, 0.2);
+            color: #1e3a8a;
+            padding: 7px 14px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        /* ─── Footer ─── */
+        .footer {
+            position: relative;
+            z-index: 5;
+            margin-top: auto;
+            padding: 18px 44px;
+            background: #0c1526;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, #d4af37 0%, #f5cc5a 35%, #b8952e 70%, #d4af37 100%);
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .footer-title {
+            font-size: 8px;
+            font-weight: 700;
+            color: rgba(148, 163, 184, 0.5);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        .footer-url {
+            font-size: 11px;
+            color: #d4af37;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .admission-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .adm-label {
+            font-size: 8px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(148, 163, 184, 0.5);
+            font-weight: 700;
+        }
+
+        .adm-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .bottom-bar {
+            height: 5px;
+            background: linear-gradient(90deg, #d4af37 0%, #f5cc5a 30%, #1e3a8a 65%, #0c1526 100%);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ─── Decorative SVG ─── */
+        .deco-svg {
+            position: absolute;
+            z-index: 3;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            opacity: 0.5;
+        }
+
+        .ghost-number {
+            position: absolute;
+            right: -20px;
+            top: 200px;
+            font-family: 'Playfair Display', serif;
+            font-size: 400px;
+            font-weight: 800;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(12, 21, 38, 0.04);
+            z-index: 2;
+            line-height: 1;
+            user-select: none;
+            letter-spacing: -20px;
+        }
+
+        /* =========================================
+     PERFECT PRINT CSS OVERRIDES 
+     ========================================= */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+                background: #ffffff !important;
+                align-items: flex-start;
+                height: 100%;
+            }
+
+            .page {
+                box-shadow: none;
+                margin: 0;
+                width: 210mm;
+                height: 297mm;
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+
+            .print-btn {
+                display: none !important;
+            }
+
+            .bg-image,
+            .bg-gradient-overlay,
+            .color-streak,
+            .bottom-bar {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .footer {
+                background: #0c1526 !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="print-btn" onclick="window.print()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        Save as PDF
+    </button>
+
+    <div class="page">
+        <div class="color-streak"></div>
+        <div class="bg-image"></div>
+        <div class="bg-gradient-overlay"></div>
+        <div class="side-rule"></div>
+        <div class="ghost-number">03</div>
+
+        <svg class="deco-svg" viewBox="0 0 794 1123" preserveAspectRatio="xMidYMid slice"
+            xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+                <linearGradient id="aiLineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#d4af37" stop-opacity="0.1" />
+                    <stop offset="50%" stop-color="#1e3a8a" stop-opacity="0.5" />
+                    <stop offset="100%" stop-color="#d4af37" stop-opacity="0.1" />
+                </linearGradient>
+            </defs>
+
+            <g stroke="url(#aiLineGrad)" stroke-width="1.5" fill="none">
+                <path d="M 850 150 C 600 250, 400 100, -50 400" />
+                <path d="M -50 750 C 300 650, 450 900, 850 850" />
+            </g>
+
+            <g filter="url(#neonGlow)">
+                <circle cx="650" cy="180" r="3" fill="#d4af37" />
+                <circle cx="550" cy="240" r="4.5" fill="#1e3a8a" />
+                <circle cx="600" cy="350" r="2.5" fill="#d4af37" />
+                <circle cx="500" cy="300" r="4" fill="#0c1526" />
+            </g>
+        </svg>
+
+        <div class="headline-block" style="margin-bottom: 24px;">
+            <div class="headline-sub">Programme Overview</div>
+            <div class="headline-main">
+                <em>Course</em>
+                <strong>Highlights</strong>
+            </div>
+        </div>
+
+        <div class="glass-panel">
+            <div class="panel-title">Objective[cite: 1]</div>
+            <p class="objective-text">
+                This joint certification programme is being undertaken in since 2019 and covers not only the Python
+                Programming and its fundamental data structures, rather participants also learn how to program and work
+                on data science libraries like Numpy and pandas, apply data analysis, data cleaning techniques, data
+                visualization.[cite: 1] The concept of Machine Learning, its models and implementation of its algorithms
+                will be covered in detail.[cite: 1] The deep learning algorithm in neural networks converting the domain
+                of text and images will also be covered.[cite: 1]
+            </p>
+        </div>
+
+        <div class="glass-panel">
+            <div class="split-grid">
+                <div>
+                    <div class="panel-title">Course Highlights[cite: 1]</div>
+                    <ul class="bullet-list">
+                        <li>Joint assessment and certification[cite: 1]</li>
+                        <li>Lectures by faculty of NIELIT and IIT Ropar[cite: 1]</li>
+                        <li>Major thrust on Hands-on training[cite: 1]</li>
+                        <li>Course curriculum jointly designed by NIELIT and IIT Ropar[cite: 1]</li>
+                        <li>Exposure &amp; access to high standards of IIT &amp; NIELIT's industry oriented
+                            approach[cite: 1]</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="panel-title" style="color: #1e3a8a;">Course Outcome[cite: 1]</div>
+                    <ul class="bullet-list outcome-list">
+                        <li>Industry Ready[cite: 1]</li>
+                        <li>In depth practical knowledge of AI and ML[cite: 1]</li>
+                        <li>Enhance Employability[cite: 1]</li>
+                        <li>Visit to IIT Ropar[cite: 1]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-band">
+            <div class="info-card">
+                <div class="panel-title" style="margin-bottom: 8px;">Eligibility[cite: 1]</div>
+                <div class="info-value">10+2 Pass &amp; Above[cite: 1]</div>
+                <div class="info-subtext">
+                    Pursuing B Tech / MSc / BSc (in any stream and any year) or MCA/ BCA (any year) or Diploma (IT/CS)
+                    pass or A Level or higher.[cite: 1]
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="panel-title" style="color: #1e3a8a; margin-bottom: 8px;">Fee Structure[cite: 1]</div>
+                <div class="info-value">Rs. 22,000 <span
+                        style="font-size: 16px; font-family: 'Inter', sans-serif; color: #d4af37;">+ 18%
+                        GST</span>[cite: 1]</div>
+                <div class="info-subtext">
+                    Total: Rs. 25,960.00.[cite: 1] Paid conveniently in two equal installments.[cite: 1]
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-panel" style="margin-bottom: 20px;">
+            <div class="panel-title">Course Methodology[cite: 1]</div>
+            <div class="methodology-flex">
+                <div class="method-pill">Instructor-led live classes[cite: 1]</div>
+                <div class="method-pill">Instructor-led hands-on lab sessions[cite: 1]</div>
+                <div class="method-pill">Assignments and Project Work[cite: 1]</div>
+                <div class="method-pill">Hosting projects[cite: 1]</div>
+                <div class="method-pill">Project Demonstration[cite: 1]</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-left">
+                <span class="footer-title">Apply Online</span>
+                <span class="footer-url">nltchd.info/trgcandregn/studAdmission</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <div style="font-size:12px;letter-spacing:3px;color:#ffffff;text-transform:uppercase;font-weight:600;">
+                    NIELIT Chandigarh</div>
+            </div>
+            <div class="admission-badge">
+                <span class="adm-label">Admissions Open</span>
+                <span class="adm-year">2026</span>
+            </div>
+        </div>
+
+        <div class="bottom-bar"></div>
+
+    </div>
+</body>
+
+</html>
