@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI &amp; ML Brochure | Page 4 – Batch Memories</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ─── Reset ─── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            background: #94a3b8;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px 20px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ─── Print Button ─── */
+        .print-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: #0f172a;
+            color: #fff;
+            border: none;
+            padding: 14px 26px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .print-btn:hover {
+            background: #1e3a8a;
+        }
+
+        /* ─── A4 Page ─── */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background-color: #f8f7f4;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+            color: #0f172a;
+        }
+
+        /* ─── Subtle background texture ─── */
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.03;
+            mix-blend-mode: multiply;
+            z-index: 1;
+            transform: scaleX(-1) scaleY(-1);
+        }
+
+        .bg-gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 90% 5%, rgba(212, 175, 55, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 10% 95%, rgba(99, 102, 241, 0.05) 0%, transparent 40%);
+            z-index: 2;
+        }
+
+        /* ─── Top Accent Bar ─── */
+        .color-streak {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #d4af37 0%, #f5cc5a 30%, #1e3a8a 65%, #0c1526 100%);
+            z-index: 10;
+        }
+
+        /* ─── Vertical side rule (gold→blue) ─── */
+        .side-rule {
+            position: absolute;
+            left: 56px;
+            top: 80px;
+            bottom: 80px;
+            width: 2px;
+            background: linear-gradient(180deg,
+                    transparent,
+                    rgba(212, 175, 55, 0.5) 20%,
+                    rgba(30, 58, 138, 0.6) 50%,
+                    rgba(212, 175, 55, 0.4) 80%,
+                    transparent);
+            z-index: 5;
+        }
+
+        /* ─── Ghost page number ─── */
+        .ghost-number {
+            position: absolute;
+            right: -20px;
+            top: 200px;
+            font-family: 'Playfair Display', serif;
+            font-size: 400px;
+            font-weight: 800;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(12, 21, 38, 0.04);
+            z-index: 2;
+            line-height: 1;
+            user-select: none;
+            letter-spacing: -20px;
+        }
+
+        /* ─── Decorative SVG ─── */
+        .deco-svg {
+            position: absolute;
+            z-index: 3;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            opacity: 0.5;
+        }
+
+        /* ─── Main headline ─── */
+        .headline-block {
+            position: relative;
+            z-index: 5;
+            padding: 50px 64px 0 80px;
+        }
+
+        .headline-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #1e3a8a;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            padding-left: 4px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .headline-sub::before {
+            content: '';
+            width: 28px;
+            height: 1px;
+            background: #d4af37;
+        }
+
+        .headline-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 60px;
+            font-weight: 300;
+            line-height: 0.95;
+            letter-spacing: -1.5px;
+            margin-bottom: 4px;
+            color: #0c1526;
+        }
+
+        .headline-main em {
+            font-style: italic;
+            color: #1e3a8a;
+            display: block;
+            font-weight: 400;
+        }
+
+        .headline-main strong {
+            font-weight: 900;
+            font-style: normal;
+            color: #d4af37;
+            display: block;
+        }
+
+        /* ─── Photo Collage Grid ─── */
+        .collage-container {
+            position: relative;
+            z-index: 5;
+            padding: 20px 64px 0 80px;
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .collage-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 10px;
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+        }
+
+        /* 1-column × 1-row card for the bottom strip */
+        .item-narrow {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+
+        /* Individual Photo Cards */
+        .collage-item {
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #e8e8e4;
+            border: 1px solid #e0ddd6;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Gold top accent on each card */
+        .collage-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1e3a8a, #d4af37);
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .collage-item:hover::after {
+            opacity: 1;
+        }
+
+        .collage-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            z-index: 1;
+            position: relative;
+            filter: saturate(90%) contrast(105%);
+        }
+
+        .collage-item:hover img {
+            transform: scale(1.04);
+        }
+
+        /* Grid Spans */
+        .item-wide-large {
+            grid-column: span 4;
+            grid-row: span 2;
+        }
+
+        .item-square-large {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .item-wide-small {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        /* Captions inside photos */
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(0deg, rgba(12, 21, 38, 0.92) 0%, rgba(12, 21, 38, 0.65) 60%, transparent 100%);
+            padding: 28px 16px 14px;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .photo-caption::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #d4af37, #1e3a8a);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .collage-item:hover .photo-caption::before {
+            opacity: 1;
+        }
+
+        .caption-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #f8fafc;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+        }
+
+        .caption-sub {
+            font-size: 9px;
+            font-weight: 700;
+            color: #d4af37;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+        }
+
+        /* ─── Footer Band ─── */
+        .footer {
+            position: relative;
+            z-index: 5;
+            margin-top: 20px;
+            padding: 14px 64px 14px 80px;
+            background: #0c1526;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, #d4af37 0%, #f5cc5a 35%, #b8952e 70%, #d4af37 100%);
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .footer-title {
+            font-size: 8px;
+            font-weight: 700;
+            color: rgba(148, 163, 184, 0.5);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        .footer-url {
+            font-size: 11px;
+            color: #d4af37;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-decoration: none;
+        }
+
+        .footer-url:hover {
+            text-decoration: underline;
+            color: #f5cc5a;
+        }
+
+        .footer-qr {
+            width: 72px;
+            height: 72px;
+            border-radius: 4px;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            background: #fff;
+            padding: 2px;
+            object-fit: contain;
+        }
+
+        .admission-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .adm-label {
+            font-size: 8px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(148, 163, 184, 0.5);
+            font-weight: 700;
+        }
+
+        .adm-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        /* ─── Bottom Bar ─── */
+        .bottom-bar {
+            height: 5px;
+            background: linear-gradient(90deg, #d4af37 0%, #f5cc5a 30%, #1e3a8a 65%, #0c1526 100%);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ─── Print Styles ─── */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+                background: #ffffff !important;
+                align-items: flex-start;
+                height: 100%;
+            }
+
+            .page {
+                box-shadow: none;
+                margin: 0;
+                width: 210mm;
+                height: 297mm;
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+
+            .print-btn {
+                display: none !important;
+            }
+
+            .bg-image,
+            .bg-gradient-overlay,
+            .color-streak,
+            .bottom-bar {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .footer {
+                background: #0c1526 !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="print-btn" onclick="window.print()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        Print A4
+    </button>
+
+    <div class="page">
+        <div class="color-streak"></div>
+        <div class="bg-image"></div>
+        <div class="bg-gradient-overlay"></div>
+        <div class="side-rule"></div>
+        <div class="ghost-number">04</div>
+
+        <!-- Decorative SVG — navy/gold palette matching page1 & page2 -->
+        <svg class="deco-svg" viewBox="0 0 794 1123" preserveAspectRatio="xMidYMid slice"
+            xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+                <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#d4af37" stop-opacity="0.1" />
+                    <stop offset="50%" stop-color="#1e3a8a" stop-opacity="0.45" />
+                    <stop offset="100%" stop-color="#d4af37" stop-opacity="0.1" />
+                </linearGradient>
+            </defs>
+
+            <g stroke="url(#lineGrad)" stroke-width="1.5" fill="none">
+                <path d="M 850 150 C 600 250, 400 100, -50 400" />
+                <path d="M -50 750 C 300 650, 450 900, 850 850" />
+            </g>
+
+            <!-- Geometric lines top-right (matching page1 deco) -->
+            <line x1="650" y1="0" x2="794" y2="100" stroke="rgba(212,175,55,0.08)" stroke-width="1" />
+            <line x1="700" y1="0" x2="794" y2="70" stroke="rgba(30,58,138,0.05)" stroke-width="1" />
+            <rect x="764" y="0" width="30" height="30" fill="none" stroke="rgba(212,175,55,0.12)" stroke-width="1" />
+
+            <g filter="url(#softGlow)">
+                <circle cx="650" cy="180" r="3" fill="#d4af37" />
+                <circle cx="550" cy="240" r="4.5" fill="#1e3a8a" />
+                <circle cx="600" cy="350" r="2.5" fill="#d4af37" />
+                <circle cx="500" cy="300" r="4" fill="#0c1526" />
+            </g>
+        </svg>
+
+        <!-- Headline -->
+        <div class="headline-block">
+            <div class="headline-sub">Community &amp; Culture</div>
+            <div class="headline-main">
+                <em>Batch</em>
+                <strong>Memories</strong>
+            </div>
+        </div>
+
+        <!-- Photo Collage -->
+        <div class="collage-container">
+            <div class="collage-grid">
+
+                <!-- Main Top Banner — 4 columns × 2 rows -->
+                <div class="collage-item item-wide-large">
+                    <img src="https://github.com/ravikantmahi/Nielit-Aiml/blob/main/IMG_20260112_104833723_HDR.jpg?raw=true"
+                        alt="Classes at IIT Ropar">
+                    <div class="photo-caption">
+                        <div class="caption-sub">Immersive Learning</div>
+                        <div class="caption-title">Classes at IIT Ropar</div>
+                    </div>
+                </div>
+
+                <!-- Square Left — 2 columns × 2 rows -->
+                <div class="collage-item item-square-large">
+                    <img src="https://raw.githubusercontent.com/ravikantmahi/Nielit-Aiml/refs/heads/main/assets/WhatsApp%20Image%202026-05-13%20at%2012.36.39%20PM.jpeg"
+                        alt="Glimpses from July 2025 batch">
+                    <div class="photo-caption">
+                        <div class="caption-sub">Student Cohort</div>
+                        <div class="caption-title">Glimpses from July 2025 batch</div>
+                    </div>
+                </div>
+
+                <!-- Wide top-right — 2 columns × 1 row -->
+                <div class="collage-item item-wide-small">
+                    <img src="https://raw.githubusercontent.com/ravikantmahi/Nielit-Aiml/refs/heads/main/IMG_20260112_125218609_HDR%20-%20Copy.jpg"
+                        alt="Lecture – AI in Agriculture">
+                    <div class="photo-caption">
+                        <div class="caption-sub">Specialized Domains</div>
+                        <div class="caption-title">Lecture – AI in Agriculture</div>
+                    </div>
+                </div>
+
+                <!-- Wide bottom-right — 2 columns × 1 row -->
+                <div class="collage-item item-wide-small">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop"
+                        alt="Visit to TBIF, IIT Ropar &amp; Startups">
+                    <div class="photo-caption">
+                        <div class="caption-sub">Ecosystem Exposure</div>
+                        <div class="caption-title">Visit to TBIF, IIT Ropar &amp; Startups</div>
+                    </div>
+                </div>
+
+                <!-- NEW: Certificate Ceremony — 2 columns × 1 row -->
+                <div class="collage-item item-wide-small">
+                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=800&auto=format&fit=crop"
+                        alt="Certificate Distribution Ceremony">
+                    <div class="photo-caption">
+                        <div class="caption-sub">Milestone Achieved</div>
+                        <div class="caption-title">Certificate Distribution Ceremony</div>
+                    </div>
+                </div>
+
+                <!-- NEW: Project Demo Day — 2 columns × 1 row -->
+                <div class="collage-item item-wide-small">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop"
+                        alt="AI &amp; ML Project Demo Day">
+                    <div class="photo-caption">
+                        <div class="caption-sub">Innovation Showcase</div>
+                        <div class="caption-title">AI &amp; ML Project Demo Day</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer Band -->
+        <div class="footer">
+            <div class="footer-left">
+                <span class="footer-title">Apply Online</span>
+                <a class="footer-url" href="https://nltchd.info/trgcandregn/studAdmission" target="_blank"
+                    rel="noopener noreferrer">nltchd.info/trgcandregn/studAdmission</a>
+            </div>
+
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <img class="footer-qr"
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fnltchd.info%2Ftrgcandregn%2FstudAdmission&color=0c1526&bgcolor=ffffff&margin=4"
+                    alt="Registration QR Code">
+                <div
+                    style="font-size:7px;letter-spacing:2px;color:rgba(212,175,55,0.7);text-transform:uppercase;font-weight:600;">
+                    Scan to Register</div>
+            </div>
+
+            <div class="admission-badge">
+                <span class="adm-label">Admissions Open</span>
+                <span class="adm-year">2026</span>
+            </div>
+        </div>
+
+        <div class="bottom-bar"></div>
+
+    </div>
+</body>
+
+</html>

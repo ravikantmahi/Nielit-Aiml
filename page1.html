@@ -317,7 +317,7 @@
     /* ─── Sidebar Bottom Contact ─── */
     .sb-contact {
       margin-top: auto;
-      padding-top: 24px;
+      padding-top: 20px;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
@@ -327,7 +327,7 @@
       letter-spacing: 2.5px;
       text-transform: uppercase;
       color: rgba(148, 163, 184, 0.5);
-      margin-bottom: 6px;
+      margin-bottom: 10px;
     }
 
     .sb-contact-url {
@@ -336,6 +336,75 @@
       font-weight: 600;
       letter-spacing: 0.3px;
       word-break: break-all;
+      margin-bottom: 12px;
+    }
+
+    /* ─── QR Code block ─── */
+    .sb-qr-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .sb-qr-box {
+      background: #ffffff;
+      border-radius: 6px;
+      padding: 5px;
+      flex-shrink: 0;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .sb-qr-box img {
+      display: block;
+      width: 60px;
+      height: 60px;
+    }
+
+    .sb-qr-meta {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .sb-qr-label {
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, 0.5);
+      margin-bottom: 4px;
+    }
+
+    .sb-qr-url {
+      font-size: 9px;
+      color: #d4af37;
+      font-weight: 600;
+      word-break: break-all;
+      line-height: 1.4;
+    }
+
+    /* ─── Registration button in sidebar ─── */
+    .sb-reg-btn {
+      display: block;
+      width: 100%;
+      padding: 10px 12px;
+      background: linear-gradient(135deg, #d4af37 0%, #f5cc5a 50%, #d4af37 100%);
+      color: #0c1526;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      box-shadow: 0 3px 12px rgba(212, 175, 55, 0.35);
+      transition: opacity 0.2s;
+    }
+
+    .sb-reg-btn:hover {
+      opacity: 0.88;
     }
 
     /* ══════════════════════════════════════
@@ -968,10 +1037,35 @@
             </div>
           </div>
 
-          <!-- Contact -->
+          <!-- Contact + QR + Registration -->
           <div class="sb-contact">
-            <div class="sb-contact-label">Admissions Portal</div>
-            <div class="sb-contact-url">nltchd.info/trgcandregn/<br>studAdmission</div>
+            <div class="sb-contact-label">Scan to Register</div>
+
+            <!-- QR Code + URL side by side -->
+            <div class="sb-qr-wrap">
+              <div class="sb-qr-box">
+                <img
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fnltchd.info%2Ftrgcandregn%2FstudAdmission&color=0c1526&bgcolor=ffffff&margin=4"
+                  alt="Registration QR Code"
+                  title="Scan to open admissions portal"
+                >
+              </div>
+              <div class="sb-qr-meta">
+                <div class="sb-qr-label">Admissions Portal</div>
+                <div class="sb-qr-url">nltchd.info/<br>trgcandregn/<br>studAdmission</div>
+              </div>
+            </div>
+
+            <!-- Register Now button -->
+            <a
+              id="register-now-btn"
+              class="sb-reg-btn"
+              href="https://nltchd.info/trgcandregn/studAdmission"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ➜ Register Now
+            </a>
           </div>
         </div>
       </div>
@@ -1145,9 +1239,16 @@
             <div class="ft-sep"></div>
           </div>
 
-          <div class="ft-right">
+          <div class="ft-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
             <div class="ft-year-lbl">Batch</div>
             <div class="ft-year">2026</div>
+            <a
+              id="footer-register-link"
+              href="https://nltchd.info/trgcandregn/studAdmission"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#d4af37;text-decoration:none;border:1px solid rgba(212,175,55,0.35);border-radius:3px;padding:3px 8px;margin-top:2px;"
+            >Register →</a>
           </div>
         </div>
       </div>
